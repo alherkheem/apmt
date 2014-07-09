@@ -31,6 +31,10 @@ angular
                 templateUrl: 'views/projects.html',
                 controller: 'ProjectsCtrl'
             })
+            .when('/projects/add', {
+                templateUrl: 'views/projects/add.html',
+                controller: 'ProjectsCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
