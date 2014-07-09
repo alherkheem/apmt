@@ -16,7 +16,18 @@ describe('Controller: ProjectsCtrl', function() {
         });
     }));
 
-    it('should attach a list of awesomeThings to the scope', function() {
-        expect(true).toBe(true);
+    it('should output the projects', function() {
+        expect(typeof scope.projects).toBe('object');
+    });
+
+    it('should remove the project when you pass the index to remove', function() {
+        scope.projects = [{
+            'name': 'Project',
+            'start': '2000-01-01',
+            'end': '2000-01-01'
+        }];
+        var index = 0;
+        scope.remove(index);
+        expect(scope.projects.length).toBe(0);
     });
 });

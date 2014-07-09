@@ -1,16 +1,19 @@
 <table class="table table-bordered table-striped">
 	<tr>
-		<td>#</td>
 		<td>Name</td>
 		<td>Start</td>
 		<td>End</td>
+		<td>Actions</td>
 	</tr>
 	<tr ng-repeat="proj in projects">
-		<td>{{proj.id}}</td>
 		<td>{{proj.name}}</td>
 		<td>{{proj.start}}</td>
 		<td>{{proj.end}}</td>
+		<td>
+			<a class="btn btn-xs btn-default" href="#/projects/save/{{$index}}">Edit</a>
+			<button class="btn btn-xs btn-default" ng-click="remove($index)">Remove</button>
+		</td>
 	</tr>
 </table>
 
-<a ng-href="#/projects/add" class="btn btn-success">Add New</a>
+<a ng-href="#/projects/save" class="btn btn-success">Add New</a>

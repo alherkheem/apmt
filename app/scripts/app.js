@@ -31,9 +31,13 @@ angular
                 templateUrl: 'views/projects.html',
                 controller: 'ProjectsCtrl'
             })
-            .when('/projects/add', {
-                templateUrl: 'views/projects/add.html',
-                controller: 'ProjectsCtrl'
+            .when('/projects/save', {
+                templateUrl: 'views/projects/save.html',
+                controller: 'ProjectsSaveCtrl'
+            })
+            .when('/projects/save/:id', {
+                templateUrl: 'views/projects/save.html',
+                controller: 'ProjectsSaveCtrl'
             })
             .otherwise({
                 redirectTo: '/'
