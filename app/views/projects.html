@@ -1,0 +1,16 @@
+<table class="table table-bordered table-striped">
+	<tr>
+		<td>#</td>
+		<td>Name</td>
+		<td>Start</td>
+		<td>End</td>
+	</tr>
+	<tr ng-repeat="proj in projects">
+		<td>{{proj.id}}</td>
+		<td>{{proj.name}}</td>
+		<td>{{proj.start}}</td>
+		<td>{{proj.end}}</td>
+	</tr>
+</table>
+
+<a href="#/projects/add" class="btn btn-success">Add New</a>
