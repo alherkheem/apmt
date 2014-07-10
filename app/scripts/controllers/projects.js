@@ -8,38 +8,26 @@
  * Controller of the myYoProjectApp
  */
 
-function getProjects() {
-    var projects = $.cookie('projects');
-    if (projects === undefined) {
-        projects = [];
-    }
-    return projects;
-}
-
-function setProjects(projects) {
-    $.cookie('projects', projects);
-}
-
 angular.module('myYoProjectApp')
 
-.controller('ProjectsCtrl', ['$scope', '$location', '$route',
+    .controller('ProjectsCtrl', ['$scope', '$location', '$route', 'projects',
 
-    function($scope, $location, $route) {
-        var projects = getProjects();
-        $scope.projects = projects;
+        function($scope, $location, $route, projectsService) {
+            var projects = projectsService.read();
+            $scope.projects = projects;
 
-        $scope.remove = function(index) {
-            $scope.projects.splice(index, 1);
-            setProjects($scope.projects);
-            $route.reload();
-        };
+            $scope.remove = function(index) {
+                $scope.projects.splice(index, 1);
+                projectsService.save($scope.projects);
+                $route.reload();
+            };
 
-    }
-])
-    .controller('ProjectsSaveCtrl', ['$scope', '$location', '$routeParams',
+        }
+    ])
+    .controller('ProjectsSaveCtrl', ['$scope', '$location', '$routeParams', 'projects',
 
-        function($scope, $location, $routeParams) {
-            var projects = getProjects();
+        function($scope, $location, $routeParams, projectsService) {
+            var projects = projectsService.read();
 
             var index = $routeParams.id;
 
@@ -51,13 +39,15 @@ angular.module('myYoProjectApp')
             }
 
             $scope.save = function(project) {
-                if (index !== undefined) {
-                    projects[index] = project;
-                } else {
-                    projects.push(project);
+                if (project !== undefined) {
+                    if (index !== undefined) {
+                        projects[index] = project;
+                    } else {
+                        projects.push(project);
+                    }
+                    projectsService.save(projects);
+                    $location.path('/projects');
                 }
-                setProjects(projects);
-                $location.path('/projects');
             };
 
         }
