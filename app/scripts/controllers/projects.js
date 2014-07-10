@@ -21,19 +21,21 @@ function setProjects(projects) {
 }
 
 angular.module('myYoProjectApp')
-    .controller('ProjectsCtrl', ['$scope', '$location', '$route',
 
-        function($scope, $location, $route) {
-            var projects = getProjects();
-            $scope.projects = projects;
+.controller('ProjectsCtrl', ['$scope', '$location', '$route',
 
-            $scope.remove = function(index) {
-                $scope.projects.splice(index, 1);
-                setProjects($scope.projects);
-                $route.reload();
-            };
-        }
-    ])
+    function($scope, $location, $route) {
+        var projects = getProjects();
+        $scope.projects = projects;
+
+        $scope.remove = function(index) {
+            $scope.projects.splice(index, 1);
+            setProjects($scope.projects);
+            $route.reload();
+        };
+
+    }
+])
     .controller('ProjectsSaveCtrl', ['$scope', '$location', '$routeParams',
 
         function($scope, $location, $routeParams) {
