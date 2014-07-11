@@ -1,12 +1,20 @@
-/*jslint devel: true, node: true, indent: 4, vars: true, maxlen: 256 */
-'use strict';
-
 function Items() {
-}
+};
 
-Items.prototype.get = function () {
-    var data = { id : 1, nome : "teste" };
-    render(data, 200, 'application/json');
-}
+Items.prototype.get = function (callback) {
+    if (this.query.id === undefined) {
+        this.statusCode = 404;
+        callback({});
+    } else {
+        this.models.Item.findById(this.query.id, function(err, result) {
+            if (err) {
+                this.statusCode = 404;
+                callback({});
+            } else {
+                callback(result.value);
+            }
+        });
+    }
+};
 
 module.exports = Items;

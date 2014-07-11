@@ -5,7 +5,7 @@
         	"type" : "Couchbase",
         	"host" : "127.0.0.1",
         	"port" : "8091",
-        	"index" : "apmt"
+        	"index" : "s2market"
         }
     }
 }
