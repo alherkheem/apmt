@@ -1,0 +1,40 @@
+<h1>Iterations</h1>
+
+<apmt-confirm 
+	ng-show="removing"
+	message="Are you sure you want to remove this Iteration?"
+	on-positive="confirmRemove()"
+	on-negative="closeConfirm()"
+></apmt-confirm>
+
+<p ng-show="(!loading && !iterations.length)">
+	No Iterations found.
+</p>
+
+<p ng-show="loading">Loading...</p>
+
+<table ng-show="iterations.length" class="table table-bordered table-striped">
+	<tr>
+		<th>Name</th>
+		<th>Start Date</th>
+		<th>End Date</th>
+		<th>Work Days</th>
+		<th>Actions</th>
+	</tr>
+	<tr ng-repeat="iteration in iterations">
+		<td>{{iteration.name}}</td>
+		<td>{{iteration.startDate | date}}</td>
+		<td>{{iteration.endDate | date}}</td>
+		<td>{{iteration.workDays | number}}</td>
+		<td>
+			<div class="btn-group">
+				<a class="btn btn-xs btn-default" href="#/iterations/save/{{iteration.id}}">Edit</a>
+				<button class="btn btn-xs btn-default" ng-click="remove(iteration.id)">Remove</button>
+				<a class="btn btn-xs btn-info" href="#/iterations/items/{{iteration.id}}">View Items</a>
+			</div>
+		</td>
+	</tr>
+</table>
+
+
+<a ng-href="#/iterations/save" class="btn btn-success">Add New</a>

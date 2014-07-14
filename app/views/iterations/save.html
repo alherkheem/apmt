@@ -1,0 +1,54 @@
+<h1>{{mode}} Iteration</h1>
+<p ng-show="loading">Loading...</p>
+<form role="form" ng-show="!loading">
+    <input type="hidden" ng-model="iteration.id"/>
+    
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" ng-model="iteration.name" id="name" placeholder="Name">
+    </div>
+    
+    <div class="form-group">
+        <label for="planningMeetingDate">Planning Meeting Date</label>
+        <input type="date" class="form-control" ng-model="iteration.planningMeetingDate" id="planningMeetingDate">
+    </div>
+
+    <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" class="form-control" ng-model="iteration.startDate" id="startDate">
+    </div>
+    <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input type="date" class="form-control" ng-model="iteration.endDate" id="endDate">
+    </div>
+    <div class="form-group">
+        <label for="workDays">Work Days</label>
+        <input type="number" min="1" max="100" class="form-control" ng-model="iteration.workDays" id="workDays">
+    </div>
+
+    <div class="form-group">
+        <label for="reviewMeetingDate">Review Meeting Date</label>
+        <input type="date" class="form-control" ng-model="iteration.reviewMeetingDate" id="reviewMeetingDate">
+    </div>
+    <div class="form-group">
+        <label for="retrospectiveMeetingDate">Retrospective Meeting Date</label>
+        <input type="date" class="form-control" ng-model="iteration.retrospectiveMeetingDate" id="retrospectiveMeetingDate">
+    </div>
+    <div class="form-group">
+        <label for="holidays">Holydays</label>
+        <textarea class="form-control" ng-model="iteration.holidays" id="holidays"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="goal">Goal</label>
+        <textarea class="form-control" ng-model="iteration.goal" id="goal"></textarea>
+    </div>
+
+    <legend>Story Points</legend>
+    <div class="form-group">
+        <label for="storyPointsPrediction">Prediction</label>
+        <input type="number" min="1" max="1000" class="form-control" ng-model="iteration.storyPointsPrediction" id="storyPointsPrediction">
+    </div>
+
+    <button ng-class="{'disabled' : saving}" ng-click="save(iteration)" class="btn btn-default btn-success btn-lg">Save Iteration</button>
+</form>
+

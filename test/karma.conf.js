@@ -14,7 +14,7 @@ module.exports = function(config) {
         basePath: '../',
 
         // testing framework to use (jasmine/mocha/qunit/...)
-        frameworks: ['jasmine'],
+        frameworks: ['mocha'],
 
         // list of files / patterns to load in the browser
         files: [
@@ -28,9 +28,11 @@ module.exports = function(config) {
             'bower_components/angular-touch/angular-touch.js',
             'bower_components/jquery/dist/jquery.js',
             'bower_components/jquery-cookie/jquery.cookie.js',
+            'bower_components/node-assert/assert.js',
             'app/scripts/**/*.js',
-            'test/mock/**/*.js',
-            'test/spec/**/*.js'
+            // 'test/mock/**/*.js',
+            'test/spec/**/*.js',
+            'app/views/**/*.html'
         ],
 
         // list of files / patterns to exclude
@@ -55,7 +57,8 @@ module.exports = function(config) {
         plugins: [
             'karma-coverage',
             'karma-phantomjs-launcher',
-            'karma-jasmine'
+            'karma-mocha',
+            'karma-ng-html2js-preprocessor'
         ],
 
         // Continuous Integration mode
@@ -72,12 +75,20 @@ module.exports = function(config) {
         proxies: {
             '/': 'http://localhost:9000/'
         },
-        // URL root prevent conflicts with the site root
-        // urlRoot: '_karma_'
+        // URL root prevent
+        // conflicts with the site root
+        urlRoot: '/_karma_/',
 
         reporters: ['progress', 'coverage'],
         preprocessors: {
-            'app/scripts/controllers/**/*.js': ['coverage']
+            'app/scripts/services/**/*.js': 'coverage',
+            'app/scripts/filters/**/*.js': 'coverage',
+            'app/scripts/controllers/**/*.js': 'coverage',
+            'app/views/**/*.html': 'html2js'
+        },
+        ngHtml2JsPreprocessor: {
+            moduleName: 'templates',
+            stripPrefix: 'app/'
         },
         coverageReporter: {
             type: 'html',
