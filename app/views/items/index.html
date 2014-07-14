@@ -1,0 +1,31 @@
+<h1>Items</h1>
+<br/>
+<p ng-show="loading">Loading...</p>
+<p ng-show="(!loading && !items.length)">No items :(</p>
+<a href="#/items/save" class="btn btn-success">Add New Item</a>
+<br/><br/>
+<table ng-show="items.length" class="table table-bordered table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Status</th>
+			<th>Iteration</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in items">
+			<td>{{item.title}}</td>
+			<td>{{item.status | humanize}}</td>
+			<td>{{item.iteration.name}}</td>
+			<td>
+				<div class="btn-group">
+					<a class="btn btn-xs btn-default" href="#/items/save/{{item.id}}">Edit</a>
+					<button class="btn btn-xs btn-danger" ng-click="remove(item.id)">Remove</button>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<br/><br/>

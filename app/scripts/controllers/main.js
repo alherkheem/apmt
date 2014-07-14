@@ -2,23 +2,38 @@
 
 /**
  * @ngdoc function
- * @name myYoProjectApp.controller:MainCtrl
+ * @name apmtApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the myYoProjectApp
+ * Controller of the apmtApp
  */
-angular.module('myYoProjectApp')
-    .controller('MainCtrl', ['$scope', '$location',
-        function($scope, $location) {
-            $scope.menus = [{
-                'name': 'Home',
-                'url': '/'
-            }, {
-                'name': 'Projects',
-                'url': '/projects'
-            }];
-            $scope.isMenuSelected = function(menu) {
-                return menu.url === $location.path();
-            };
-        }
-    ]);
+var app = angular.module('apmtApp');
+
+app.controller('MainCtrl', ['$scope', '$location',
+    function($scope, $location) {
+        $scope.menus = [{
+            'name': 'Home',
+            'url': '/'
+        }, {
+            'name': 'Iterations',
+            'url': '/iterations'
+        }, {
+            'name': 'Items',
+            'url': '/items'
+        }];
+        $scope.isMenuSelected = function(menu) {
+            return menu.url === $location.path();
+        };
+
+        $scope.safeApply = function(fn) {
+            var phase = this.$root.$$phase;
+            if (phase === '$apply' || phase === '$digest') {
+                if (fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                this.$apply(fn);
+            }
+        };
+    }
+]);
