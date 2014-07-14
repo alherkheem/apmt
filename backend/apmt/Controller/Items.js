@@ -2,19 +2,32 @@ function Items() {
 };
 
 Items.prototype.get = function (callback) {
-    if (this.query.id === undefined) {
-        this.statusCode = 404;
-        callback({});
-    } else {
-        this.models.Item.findById(this.query.id, function(err, result) {
-            if (err) {
-                this.statusCode = 404;
-                callback({});
+    var that = this;
+    this.models.Item.find(this.query, function (err, result) {
+        if (err) {
+            that.statusCode = 404;
+            callback({});
+        } else {
+            if (result !== undefined) {
+                callback(result);    
             } else {
-                callback(result.value);
-            }
-        });
-    }
+                that.statusCode = 404;
+                callback({});                
+            }            
+        }
+    });
+};
+
+Items.prototype.post = function (callback) {
+    var that = this;
+    this.models.Item.save(this.query.id, this.payload, function (err, result) {
+        if (err) {
+            that.statusCode = 404;
+            callback(err);
+        } else {
+            callback(result);
+        }
+    });
 };
 
 module.exports = Items;
