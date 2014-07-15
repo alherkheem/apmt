@@ -27,19 +27,18 @@ app.controller('IterationsCtrl', ['$scope', '$location', '$route', 'NRCM', 'mess
         };
 
         $scope.closeConfirm = function() {
-            console.log('onNegative');
             $scope.removing = false;
             $scope.safeApply();
         };
 
         $scope.confirmRemove = function() {
             if (this.currentIterationId) {
-                this.removing = false;
                 NRCM.iterations.remove(this.currentIterationId, function(success) {
                     if (success) {
                         messages.success('Iteration removed successfully!');
                         $route.reload();
                     }
+                    this.removing = false;
                 });
             }
         };

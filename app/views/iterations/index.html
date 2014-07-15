@@ -2,7 +2,7 @@
 
 <apmt-confirm 
 	ng-show="removing"
-	message="Are you sure you want to remove this Iteration?"
+	message="Are you sure you want to remove this Item?"
 	on-positive="confirmRemove()"
 	on-negative="closeConfirm()"
 ></apmt-confirm>
@@ -29,7 +29,7 @@
 		<td>
 			<div class="btn-group">
 				<a class="btn btn-xs btn-default" href="#/iterations/save/{{iteration.id}}">Edit</a>
-				<button class="btn btn-xs btn-default" ng-click="remove(iteration.id)">Remove</button>
+				<button class="btn btn-xs btn-danger" ng-click="remove(iteration.id)">Remove</button>
 				<a class="btn btn-xs btn-info" href="#/iterations/items/{{iteration.id}}">View Items</a>
 			</div>
 		</td>

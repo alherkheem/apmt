@@ -9,8 +9,8 @@
  */
 var app = angular.module('apmtApp');
 
-app.controller('ItemsCtrl', ['$scope', '$route', 'NRCM',
-    function($scope, $route, NRCM) {
+app.controller('ItemsCtrl', ['$scope', '$route', 'NRCM', 'messages',
+    function($scope, $route, NRCM, messages) {
         $scope.loading = true;
 
         NRCM.items.list(function(data) {
@@ -19,24 +19,33 @@ app.controller('ItemsCtrl', ['$scope', '$route', 'NRCM',
             $scope.safeApply();
         });
 
-        // $scope.remove = function(id) {
-        // if (confirm('Are you sure you want to remove this item?')) {
-        //     NRCM.items.remove(id, function(success) {
-        //         if (success) {
-        //             alert('Item removed successfully!');
-        //         } else {
-        //             alert('Error while trying to remove item.');
-        //         }
-        //         $route.reload();
-        //     });
+        $scope.remove = function(id) {
+            $scope.removing = true;
+            $scope.currentItemId = id;
+            $scope.safeApply();
+        };
 
-        // }
-        // };
+        $scope.closeConfirm = function() {
+            $scope.removing = false;
+            $scope.safeApply();
+        };
+
+        $scope.confirmRemove = function() {
+            if (this.currentItemId) {
+                NRCM.items.remove(this.currentItemId, function(success) {
+                    if (success) {
+                        messages.success('Item removed successfully!');
+                        $route.reload();
+                    }
+                    $scope.removing = false;
+                });
+            }
+        };
     }
 ]);
 
-app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'NRCM',
-    function($scope, $location, $routeParams, NRCM) {
+app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'NRCM', 'messages',
+    function($scope, $location, $routeParams, NRCM, messages) {
         var id = $routeParams.id;
 
         $scope.loading = true;
@@ -50,7 +59,6 @@ app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'NRCM',
                 iteration = iterations[i];
                 $scope.iterations[iteration.id] = iteration.name;
             }
-            console.log($scope.iterations);
 
             if (id === undefined) {
                 $scope.loading = false;
@@ -61,7 +69,7 @@ app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'NRCM',
                 NRCM.items.read(id, function(data) {
                     $scope.loading = false;
                     if (!data) {
-                        //alert('Item not found!');
+                        messages.error('Item not found!');
                     }
                     $scope.item = data;
                     $scope.safeApply();
@@ -74,10 +82,12 @@ app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'NRCM',
                 $scope.saving = true;
                 NRCM.items.save(item, function(data) {
                     if (!data) {
-                        //alert('Error while trying to save item');
+                        messages.error('Error while trying to save item.');
+                    } else {
+                        messages.success('Item saved successfully!');
                     }
                     $location.path('/items');
-                    $scope.safeApply();
+                    $scope.$apply();
                 });
             }
         };

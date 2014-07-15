@@ -1,9 +1,20 @@
 <h1>Items</h1>
-<br/>
+
+<apmt-confirm 
+	ng-show="removing"
+	message="Are you sure you want to remove this Item?"
+	on-positive="confirmRemove()"
+	on-negative="closeConfirm()"
+></apmt-confirm>
+
 <p ng-show="loading">Loading...</p>
+
 <p ng-show="(!loading && !items.length)">No items :(</p>
+
 <a href="#/items/save" class="btn btn-success">Add New Item</a>
+
 <br/><br/>
+
 <table ng-show="items.length" class="table table-bordered table-striped table-bordered">
 	<thead>
 		<tr>
