@@ -7,7 +7,7 @@ function Item() {
             callback(true);
         }
     }};
-    this.requires = { 'title' : 'Must have a title' };
+    this.requires = { 'title' : 'title' };
     this.locks = {};
     this.keys = {};
     this.separator = '_';
