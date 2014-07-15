@@ -102,7 +102,6 @@ app.service('NRCM', ['$http',
                         }
                     }
                     callback(items);
-
                 }, 1000);
             },
             read: function(id, callback) {
@@ -111,36 +110,11 @@ app.service('NRCM', ['$http',
                 }, 1000);
             },
             save: function(data, callback) {
-                // $http.post('http://192.168.2.209:3333/apmt/items', data).success(function(response) {
-                //     callback(response);
-                // }).error(function() {
-                //     callback(false);
-                // });
-                setTimeout(function() {
-                    var items = $.cookie('items');
-                    if (!items) {
-                        items = [];
-                    }
-                    if (data.id !== undefined) {
-                        for (var i in items) {
-                            if (items.hasOwnProperty(i)) {
-                                var item = items[i];
-                                if (item.id === data.id) {
-                                    items[i] = data;
-                                    $.cookie('items', items);
-                                    callback(data);
-                                    return;
-                                }
-                            }
-                        }
-                        callback(false);
-                    } else {
-                        data.id = that.uuid();
-                        items.push(data);
-                        $.cookie('items', items);
-                        callback(data);
-                    }
-                }, 1000);
+                $http.post('http://192.168.2.204:3333/apmt/items', data).success(function(response) {
+                    callback(response);
+                }).error(function() {
+                    callback(false);
+                });
             },
             remove: function(id, callback) {
                 setTimeout(function() {

@@ -1,11 +1,11 @@
 {
-    "urlFormat" : "/$application/$controller",
-    "dataSources" : {
-        "default" : {
-        	"type" : "Couchbase",
-        	"host" : "127.0.0.1",
-        	"port" : "8091",
-        	"index" : "s2market"
+    "urlFormat": "/$application/$controller",
+    "dataSources": {
+        "default": {
+            "type": "Couchbase",
+            "host": "127.0.0.1",
+            "port": "8091",
+            "index": "apmt"
         }
     }
 }

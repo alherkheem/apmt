@@ -9,8 +9,8 @@
 				<p>{{message}}</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" ng-click="onPositive()" class="positive btn btn-danger">Yes</button>
-				<button type="button" ng-click="onNegative()" data-dismiss="modal" class="negative btn btn-default">No</button>
+				<button type="button" ng-class="{'disabled' : buttonsDisabled}" ng-click="triggerPositive()" class="positive btn btn-danger">Yes</button>
+				<button type="button" ng-class="{'disabled' : buttonsDisabled}" ng-click="triggerNegative()" data-dismiss="modal" class="negative btn btn-default">No</button>
 			</div>
 		</div>
 	</div>

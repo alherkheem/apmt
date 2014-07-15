@@ -10,6 +10,17 @@ app.directive('apmtConfirm', function() {
             'message': '@',
             'onPositive': '&',
             'onNegative': '&'
+        },
+        link: function(scope) {
+            scope.buttonsDisabled = false;
+            scope.triggerPositive = function() {
+                scope.buttonsDisabled = true;
+                scope.onPositive();
+            };
+            scope.triggerNegative = function() {
+                scope.buttonsDisabled = true;
+                scope.onNegative();
+            };
         }
     };
 });
