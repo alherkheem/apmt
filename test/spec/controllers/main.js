@@ -46,4 +46,16 @@ describe('Controller: MainCtrl', function() {
 
     });
 
+    describe('safeApply()', function () {
+
+        it('should call the passed function', function(done) {
+
+            scope.safeApply(function(){
+                done();
+            });
+            
+            assert.fail();
+        });
+    });
+
 });

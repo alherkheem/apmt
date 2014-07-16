@@ -8,8 +8,8 @@
  * Service in the apmtApp.
  */
 var app = angular.module('apmtApp');
-app.service('NRCM', ['$http',
-    function NRCM($http) {
+app.service('nrcm', ['$http',
+    function nrcm($http) {
 
         function findByIdInCookies(id, type) {
             var objects = $.cookie(type);
@@ -34,13 +34,13 @@ app.service('NRCM', ['$http',
                         iterations = [];
                     }
                     callback(iterations);
-                }, 1000);
+                }, 500);
 
             },
             read: function(id, callback) {
                 setTimeout(function() {
                     callback(findByIdInCookies(id, 'iterations'));
-                }, 1000);
+                }, 500);
             },
             save: function(data, callback) {
                 setTimeout(function() {
@@ -68,7 +68,7 @@ app.service('NRCM', ['$http',
                         $.cookie('iterations', iterations);
                         callback(data);
                     }
-                }, 1000);
+                }, 500);
             },
             remove: function(id, callback) {
                 setTimeout(function() {
@@ -85,36 +85,76 @@ app.service('NRCM', ['$http',
                         }
                     }
                     callback(false);
-                }, 1000);
+                }, 500);
             }
 
         };
 
         this.items = {
-            list: function(callback) {
+            list: function(iterationId, callback) {
                 setTimeout(function() {
                     var items = $.cookie('items');
+                    var i;
                     // Vincula as iterations aos items
-                    for (var i in items) {
+                    for (i in items) {
                         if (items.hasOwnProperty(i)) {
                             var iterationId = items[i].iterationId;
                             items[i].iteration = findByIdInCookies(iterationId, 'iterations');
                         }
                     }
-                    callback(items);
-                }, 1000);
+
+                    var filtered = [];
+                    if (iterationId) {
+                        for (i in items) {
+                            if (items[i].iterationId === iterationId) {
+                                filtered.push(items[i]);
+                            }
+                        }
+                        callback(filtered);
+                    } else {
+                        callback(items);
+                    }
+                }, 500);
             },
             read: function(id, callback) {
                 setTimeout(function() {
                     callback(findByIdInCookies(id, 'items'));
-                }, 1000);
+                }, 500);
             },
             save: function(data, callback) {
-                $http.post('http://192.168.2.204:3333/apmt/items', data).success(function(response) {
-                    callback(response);
-                }).error(function() {
-                    callback(false);
-                });
+                // $http.post('http://192.168.2.204:3333/apmt/items', data).success(function(response) {
+                    // callback(response);
+                // }).error(function() {
+                    // callback(false);
+                // });
+
+                setTimeout(function() {
+
+                    var items = $.cookie('items');
+                    if (!items) {
+                        items = [];
+                    }
+                    if (data.id !== undefined) {
+                        for (var i in items) {
+                            if (items.hasOwnProperty(i)) {
+                                var item = items[i];
+                                if (item.id === data.id) {
+                                    items[i] = data;
+                                    $.cookie('items', items);
+                                    callback(data);
+                                    return;
+                                }
+                            }
+                        }
+                        callback(false);
+                    } else {
+                        data.id = that.uuid();
+                        items.push(data);
+                        $.cookie('items', items);
+                        callback(data);
+                    }
+                }, 500);
+
             },
             remove: function(id, callback) {
                 setTimeout(function() {
@@ -131,7 +171,7 @@ app.service('NRCM', ['$http',
                         }
                     }
                     callback(false);
-                }, 1000);
+                }, 500);
             }
         };
 

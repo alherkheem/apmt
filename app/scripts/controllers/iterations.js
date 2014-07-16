@@ -1,25 +1,21 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name apmtApp.controller:IterationsCtrl
- * @description
- * # IterationsCtrl
- * Controller of the apmtApp
- */
 var app = angular.module('apmtApp');
 
-app.controller('IterationsCtrl', ['$scope', '$location', '$route', 'NRCM', 'messages',
-    function($scope, $location, $route, NRCM, messages) {
+app.controller('IterationsCtrl', ['$scope', '$location', '$route', 'nrcm', 'messages',
+    
+    function($scope, $location, $route, nrcm, messages) {
+
         $scope.removing = false;
         $scope.iterations = [];
         $scope.loading = true;
 
-        NRCM.iterations.list(function(iterations) {
+        nrcm.iterations.list(function(iterations) {
             $scope.iterations = iterations;
             $scope.loading = false;
             $scope.safeApply();
         });
+
         $scope.remove = function(id) {
             $scope.removing = true;
             $scope.currentIterationId = id;
@@ -32,21 +28,22 @@ app.controller('IterationsCtrl', ['$scope', '$location', '$route', 'NRCM', 'mess
         };
 
         $scope.confirmRemove = function() {
-            if (this.currentIterationId) {
-                NRCM.iterations.remove(this.currentIterationId, function(success) {
+            if ($scope.currentIterationId) {
+                nrcm.iterations.remove($scope.currentIterationId, function(success) {
                     if (success) {
                         messages.success('Iteration removed successfully!');
                         $route.reload();
                     }
-                    this.removing = false;
+                    $scope.removing = false;
                 });
             }
         };
     }
 ]);
-app.controller('IterationsSaveCtrl', ['$scope', '$location', '$routeParams', 'NRCM', 'messages',
 
-    function($scope, $location, $routeParams, NRCM, messages) {
+app.controller('IterationsSaveCtrl', ['$scope', '$location', '$routeParams', 'nrcm', 'messages',
+
+    function($scope, $location, $routeParams, nrcm, messages) {
         var id = $routeParams.id;
 
         if (id === undefined) {
@@ -55,7 +52,7 @@ app.controller('IterationsSaveCtrl', ['$scope', '$location', '$routeParams', 'NR
             $scope.mode = 'Edit';
             $scope.loading = true;
 
-            NRCM.iterations.read(id, function(data) {
+            nrcm.iterations.read(id, function(data) {
                 $scope.loading = false;
                 if (data === null) {
                     messages.error('Iteration not found!');
@@ -69,7 +66,7 @@ app.controller('IterationsSaveCtrl', ['$scope', '$location', '$routeParams', 'NR
         $scope.save = function(iteration) {
             if (iteration) {
                 $scope.saving = true;
-                NRCM.iterations.save(iteration, function(data) {
+                nrcm.iterations.save(iteration, function(data) {
                     if (!data) {
                         messages.error('Error while trying to save iteration');
                     } else {
