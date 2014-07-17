@@ -49,6 +49,10 @@ app.config(function($routeProvider) {
             view: 'views/items/save.html',
             controller: 'ItemsSaveCtrl'
         },
+        '/items/:iterationId' : {
+            view: 'views/items/index.html',
+            controller: 'ItemsCtrl'
+        },
         '/projects': {
             view: 'views/projects.html',
             controller: 'ProjectsCtrl'

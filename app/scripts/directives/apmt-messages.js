@@ -16,8 +16,17 @@ app.directive('apmtMessages', ['$rootScope', 'messages',
                     if (timer !== null) {
                         clearTimeout(timer);
                     }
+                    
                     scope.message = params.message;
-                    scope.type = params.type;
+
+                    switch (params.type) {
+                        case 'error': 
+                            scope.type = 'danger';
+                            break;
+                        default:
+                            scope.type = params.type;
+                    }
+
                     scope.$apply();
 
                     timer = setTimeout(function() {
