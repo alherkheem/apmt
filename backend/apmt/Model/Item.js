@@ -14,22 +14,13 @@ function Item() {
 };
 
 Item.prototype.find = function(query, callback) {
-    if (query.id !== undefined) {
-        this.model.findById(query.id, function (err, result) {
-            callback(err, result);
-        });
-    } else {
-        var queryOptions = {};
-        queryOptions.limit = query.limit !== undefined ? query.limit : 0;
-        queryOptions.skip = query.skip !== undefined ? query.skip : 0;
-        this.model.findAll('item', {}, queryOptions, function (err, result) {
-            callback(err, result);
-        });
-    }
+    this.find(query, function (err, result) {
+        callback(err, result);
+    });
 };
 
 Item.prototype.save = function (id, data, callback, prefix, options) {
-    this.model.save(id, data, function (err, result) {
+    this.save(id, data, function (err, result) {
         callback(err, result);
     }, prefix, options);
 }
