@@ -14,13 +14,13 @@ function Item() {
 };
 
 Item.prototype.find = function(query, callback) {
-    this.find(query, function (err, result) {
+    this._find(query, function (err, result) {
         callback(err, result);
     });
 };
 
 Item.prototype.save = function (id, data, callback, prefix, options) {
-    this.save(id, data, function (err, result) {
+    this._save(id, data, function (err, result) {
         callback(err, result);
     }, prefix, options);
 }

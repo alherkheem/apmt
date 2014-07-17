@@ -7,5 +7,6 @@
             "port": "8091",
             "index": "apmt"
         }
-    }
+    },
+    "requestTimeout" : 10000
 }
