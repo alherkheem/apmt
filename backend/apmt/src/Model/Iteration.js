@@ -1,5 +1,5 @@
-function Item() {
-    this.uid = 'apmt_item';
+function Iteration() {
+    this.uid = 'apmt_iteration';
     this.validate = { 'title' : function (value, validationData, callback) {
         if (typeof value !== 'string' || value.length < 5) {
             callback(false);
@@ -11,19 +11,18 @@ function Item() {
     this.locks = {};
     this.keys = {};
     this.separator = '_';
-    this.schema = { 'title' : {} };
 };
 
-Item.prototype.find = function(query, callback) {
+Iteration.prototype.find = function(query, callback) {
     this._find(query, function (err, result) {
         callback(err, result);
     });
 };
 
-Item.prototype.save = function (id, data, callback, prefix, options) {
+Iteration.prototype.save = function (id, data, callback, prefix, options) {
     this._save(id, data, function (err, result) {
         callback(err, result);
     }, prefix, options);
 }
 
-module.exports = Item;
+module.exports = Iteration;
