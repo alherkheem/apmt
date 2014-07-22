@@ -16,7 +16,7 @@ Items.prototype.options = function (callback) {
 Items.prototype.get = function (callback) {
     var that = this;
     var item = this.model('Item');
-    item.find(this.query, function (err, result) {        
+    item.find(this.query, function (err, result) {
         if (err) {
             that.statusCode = 404;
             callback({});
@@ -25,8 +25,8 @@ Items.prototype.get = function (callback) {
                 callback(result);    
             } else {
                 that.statusCode = 404;
-                callback({});                
-            }            
+                callback({});
+            }
         }
     });
 };
@@ -37,7 +37,9 @@ Items.prototype.put = function (callback) {
     item.save(this.query.id, this.payload, function (err, result) {
         if (err) {
             that.statusCode = 404;
-            callback(err);
+            callback({
+                'Error' : err.name
+            });
         } else {
             callback(result);
         }
@@ -50,7 +52,9 @@ Items.prototype.post = function (callback) {
     item.save(this.query.id, this.payload, function (err, result) {
         if (err) {
             that.statusCode = 404;
-            callback(err);
+            callback({
+                'Error' : err.name
+            });
         } else {
             callback(result);
         }

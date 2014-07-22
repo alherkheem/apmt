@@ -11,7 +11,7 @@ function Item() {
     this.locks = {};
     this.keys = {};
     this.separator = '_';
-    this.schema = { 'title' : {} };
+    this.schema = { 'title' : '' };
 };
 
 Item.prototype.find = function(query, callback) {
