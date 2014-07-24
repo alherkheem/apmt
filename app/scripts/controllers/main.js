@@ -21,6 +21,7 @@ app.controller('MainCtrl', ['$scope', '$location',
             'name': 'Items',
             'url': '/items'
         }];
+
         $scope.isMenuSelected = function(menu) {
             return menu.url === $location.path();
         };
@@ -34,6 +35,10 @@ app.controller('MainCtrl', ['$scope', '$location',
             } else {
                 this.$apply(fn);
             }
+        };
+
+        $scope.toJ = function(obj) {
+            return JSON.stringify(obj, null, 2);
         };
     }
 ]);

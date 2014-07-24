@@ -107,5 +107,8 @@ app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'nrcm', 
             }
         };
 
- }
+        $scope.canSave = function() {
+            return $scope.formSaveItem.$dirty && $scope.formSaveItem.$valid;
+        };
+    }
 ]);
