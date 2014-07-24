@@ -21,7 +21,7 @@ describe('Item', function () {
         });
 
         it('should call Model', function (done) {
-            model.find(function (result) {
+            model.find(null, function (result) {
                 done();
             });
         });

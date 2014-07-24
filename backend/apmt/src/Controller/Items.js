@@ -22,7 +22,7 @@ Items.prototype.get = function (callback) {
             callback({});
         } else {
             if (result !== undefined) {
-                callback(result);    
+                callback(result);
             } else {
                 that.statusCode = 404;
                 callback({});
