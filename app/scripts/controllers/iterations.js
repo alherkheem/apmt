@@ -3,7 +3,7 @@
 var app = angular.module('apmtApp');
 
 app.controller('IterationsCtrl', ['$scope', '$location', '$route', 'nrcm', 'messages',
-    
+
     function($scope, $location, $route, nrcm, messages) {
 
         $scope.removing = false;

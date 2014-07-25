@@ -31,7 +31,7 @@ Items.prototype.get = function (callback) {
     });
 };
 
-Items.prototype.put = function (callback) {
+Items.prototype._save = function (callback) {
     var that = this;
     var item = this.model('Item');
     item.save(this.query.id, this.payload, function (err, result) {
@@ -46,19 +46,12 @@ Items.prototype.put = function (callback) {
     });
 };
 
+Items.prototype.put = function (callback) {
+    this._save(callback);
+};
+
 Items.prototype.post = function (callback) {
-    var that = this;
-    var item = this.model('Item');
-    item.save(this.query.id, this.payload, function (err, result) {
-        if (err) {
-            that.statusCode = 404;
-            callback({
-                'Error' : err.name
-            });
-        } else {
-            callback(result);
-        }
-    });
+    this._save(callback);
 };
 
 module.exports = Items;

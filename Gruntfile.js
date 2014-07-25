@@ -355,6 +355,23 @@ module.exports = function(grunt) {
                 configFile: 'test/karma.conf.js',
                 singleRun: true
             }
+        },
+
+        validation: {
+            options: {
+                reset: grunt.option('reset') || false,
+                stoponerror: false,
+                // remotePath: 'http://decodize.com/',
+                // remoteFiles: ['html/moving-from-wordpress-to-octopress/'],
+                relaxerror: ['Bad value X-UA-Compatible for attribute http-equiv on element meta.']
+            },
+            files: {
+                src: [
+                      '<%= yeoman.app %>/index.html',
+                      '<%= yeoman.app %>/views/*.html',
+                      '<%= yeoman.app %>/404.html'
+                  ]
+            }
         }
     });
 
@@ -409,4 +426,6 @@ module.exports = function(grunt) {
         'test',
         'build'
     ]);
+
+    grunt.registerTask('html', ['validation']);
 };

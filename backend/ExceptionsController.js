@@ -41,6 +41,7 @@ ExceptionsController.prototype.onGeneral = function (callback, exception) {
     if (exception.stack !== undefined) {
         console.log(exception.stack);
     }
+    console.log(exception);
     callback({
         'name' : 'General',
         'cause' : exception

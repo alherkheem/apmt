@@ -12,20 +12,28 @@ describe('Item', function () {
             'index' : 'index'
         }
     });
+    var model;
+    beforeEach(function () {
+        model = testing.createModel('Item');
+    });
 
     describe('find', function () {
 
-        var model;
-        beforeEach(function () {
-            model = testing.createModel('Item');
-        });
-
-        it('should call Model', function (done) {
-            model.find(null, function (result) {
+        it('should call the callback', function (done) {
+            model.find(null, function () {
                 done();
             });
         });
 
+    });
+
+    describe('save', function () {
+
+        it('should call the callback', function (done) {
+            model.save(1, { }, function () {
+                done();
+            });
+        });
     });
 
 });
