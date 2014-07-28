@@ -17,6 +17,9 @@
 
 <br/><br/>
 
+ 	<button ng-disabled="pageSkip == 0" ng-click="pageSkip = pageSkip - 1">Previous</button>
+    <button ng-disabled="pageSkip >= pageDataLength/pageLimit - 1" ng-click="pageSkip = pageSkip + 1">Next</button>
+
 <table ng-show="items.length" class="table table-bordered table-striped table-bordered">
 	<thead>
 		<tr>
@@ -27,7 +30,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="item in items">
+		<tr ng-repeat="item in items | startFrom:pageSkip*pageLimit | limitTo:pageLimit">
 			<td>{{item.title}}</td>
 			<td>{{item.status | humanize}}</td>
 			<td>{{item.iteration.name}}</td>
@@ -43,5 +46,6 @@
 
 <br/><br/>
 
-
+    
+    <br />
     User Model: <pre ng-bind="toJ(items)"></pre>

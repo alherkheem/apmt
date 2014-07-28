@@ -19,6 +19,14 @@ app.controller('ItemsCtrl', ['$scope', '$route', '$routeParams', 'nrcm', 'messag
             $scope.safeApply();
         };
 
+        // TODO isolate the paginator
+        $scope.pageSkip = 0;
+        $scope.pageLimit = 3;
+        $scope.pageDataLength = 0;
+        $scope.pageCounter = function () {
+            return Math.ceil($scope.pageDataLength/$scope.pageLimit);
+        };
+
         nrcm.items.list(iterationId, function(items) {
             $scope.items = [];
             var record;
@@ -26,6 +34,7 @@ app.controller('ItemsCtrl', ['$scope', '$route', '$routeParams', 'nrcm', 'messag
                 items[record].value.id = record;
                 $scope.items.push(items[record].value);
             }
+            $scope.pageDataLength = $scope.items.length;
             // if iteration is passed, load it
             if (iterationId) {
                 nrcm.iterations.read(iterationId, function(iteration) {
@@ -74,6 +83,7 @@ app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'nrcm', 
         nrcm.iterations.list(function(iterations) {
             $scope.iterations = {};
             var iteration, i;
+
             for (i in iterations) {
                 iteration = iterations[i];
                 $scope.iterations[iteration.id] = iteration.name;
