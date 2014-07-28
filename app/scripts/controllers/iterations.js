@@ -11,7 +11,12 @@ app.controller('IterationsCtrl', ['$scope', '$location', '$route', 'nrcm', 'mess
         $scope.loading = true;
 
         nrcm.iterations.list(function(iterations) {
-            $scope.iterations = iterations;
+
+            for (record in iterations) {
+                iterations[record].value.id = record;
+                $scope.iterations.push(iterations[record].value);
+            }
+
             $scope.loading = false;
             $scope.safeApply();
         });

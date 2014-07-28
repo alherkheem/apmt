@@ -9,14 +9,13 @@ Items.prototype.before = function(callback) {
 }
 
 Items.prototype.options = function (callback) {
-    this.statusCode = 200;
     callback({});
 };
 
 Items.prototype.get = function (callback) {
     var that = this;
     var item = this.model('Item');
-    item.find(this.query, function (err, result) {
+    item.query(this.query, function (err, result) {
         if (err) {
             that.statusCode = 404;
             callback({});
@@ -34,16 +33,38 @@ Items.prototype.get = function (callback) {
 Items.prototype._save = function (callback) {
     var that = this;
     var item = this.model('Item');
-    item.save(this.query.id, this.payload, function (err, result) {
+    item.store(this.query.id, this.payload, function (err, result) {
         if (err) {
             that.statusCode = 404;
             callback({
-                'Error' : err.name
+                'error' : err.name,
+                'message' :  err.message
             });
         } else {
             callback(result);
         }
     });
+};
+
+Items.prototype.delete = function (callback) {
+    var that = this;
+    var item = this.model('Item');
+    if (this.query.id === undefined) {
+        that.statusCode = 404;
+        callback({});
+    } else {
+        item.delete(this.query.id, function (err, result) {
+            if (err) {
+                that.statusCode = 404;
+                callback({
+                    'error' : err.name,
+                    'message' :  err.message
+                });
+            } else {
+                callback(result);
+            }
+        });
+    }
 };
 
 Items.prototype.put = function (callback) {

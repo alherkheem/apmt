@@ -28,13 +28,20 @@ app.service('nrcm', ['$http',
 
         this.iterations = {
             list: function(callback) {
-                setTimeout(function() {
-                    var iterations = $.cookie('iterations');
-                    if (!iterations) {
-                        iterations = [];
-                    }
-                    callback(iterations);
-                }, 500);
+
+                $http.get('http://127.0.0.1:3333/apmt/iterations').success(function(response) {
+                    callback(response);
+                }).error(function() {
+                    callback(false);
+                });
+
+                // setTimeout(function() {
+                //     var iterations = $.cookie('iterations');
+                //     if (!iterations) {
+                //         iterations = [];
+                //     }
+                //     callback(iterations);
+                // }, 500);
 
             },
             read: function(id, callback) {
@@ -43,78 +50,99 @@ app.service('nrcm', ['$http',
                 }, 500);
             },
             save: function(data, callback) {
-                setTimeout(function() {
 
-                    var iterations = $.cookie('iterations');
-                    if (!iterations) {
-                        iterations = [];
-                    }
-                    if (data.id !== undefined) {
-                        for (var i in iterations) {
-                            if (iterations.hasOwnProperty(i)) {
-                                var iteration = iterations[i];
-                                if (iteration.id === data.id) {
-                                    iterations[i] = data;
-                                    $.cookie('iterations', iterations);
-                                    callback(data);
-                                    return;
-                                }
-                            }
-                        }
-                        callback(false);
-                    } else {
-                        data.id = that.uuid();
-                        iterations.push(data);
-                        $.cookie('iterations', iterations);
-                        callback(data);
-                    }
-                }, 500);
+                $http.post('http://127.0.0.1:3333/apmt/iterations', data).success(function(response) {
+                    callback(response);
+                }).error(function() {
+                    callback(false);
+                });
+
+                // setTimeout(function() {
+
+                //     var iterations = $.cookie('iterations');
+                //     if (!iterations) {
+                //         iterations = [];
+                //     }
+                //     if (data.id !== undefined) {
+                //         for (var i in iterations) {
+                //             if (iterations.hasOwnProperty(i)) {
+                //                 var iteration = iterations[i];
+                //                 if (iteration.id === data.id) {
+                //                     iterations[i] = data;
+                //                     $.cookie('iterations', iterations);
+                //                     callback(data);
+                //                     return;
+                //                 }
+                //             }
+                //         }
+                //         callback(false);
+                //     } else {
+                //         data.id = that.uuid();
+                //         iterations.push(data);
+                //         $.cookie('iterations', iterations);
+                //         callback(data);
+                //     }
+                // }, 500);
             },
             remove: function(id, callback) {
-                setTimeout(function() {
-                    var iterations = $.cookie('iterations');
-                    for (var i in iterations) {
-                        if (iterations.hasOwnProperty(i)) {
-                            var iteration = iterations[i];
-                            if (iteration.id === id) {
-                                iterations.splice(i, 1);
-                                $.cookie('iterations', iterations);
-                                callback(true);
-                                return;
-                            }
-                        }
-                    }
+
+                $http.delete('http://127.0.0.1:3333/apmt/iterations?id=' + id).success(function(response) {
+                    callback(response);
+                }).error(function() {
                     callback(false);
-                }, 500);
+                });
+
+                // setTimeout(function() {
+                //     var iterations = $.cookie('iterations');
+                //     for (var i in iterations) {
+                //         if (iterations.hasOwnProperty(i)) {
+                //             var iteration = iterations[i];
+                //             if (iteration.id === id) {
+                //                 iterations.splice(i, 1);
+                //                 $.cookie('iterations', iterations);
+                //                 callback(true);
+                //                 return;
+                //             }
+                //         }
+                //     }
+                //     callback(false);
+                // }, 500);
             }
 
         };
 
         this.items = {
             list: function(iterationId, callback) {
-                setTimeout(function() {
-                    var items = $.cookie('items');
-                    var i;
-                    // Vincula as iterations aos items
-                    for (i in items) {
-                        if (items.hasOwnProperty(i)) {
-                            var iterationId = items[i].iterationId;
-                            items[i].iteration = findByIdInCookies(iterationId, 'iterations');
-                        }
-                    }
 
-                    var filtered = [];
-                    if (iterationId) {
-                        for (i in items) {
-                            if (items[i].iterationId === iterationId) {
-                                filtered.push(items[i]);
-                            }
-                        }
-                        callback(filtered);
-                    } else {
-                        callback(items);
-                    }
-                }, 500);
+                $http.get('http://127.0.0.1:3333/apmt/items').success(function(response) {
+                    callback(response);
+                }).error(function() {
+                    callback(false);
+                });
+
+                // setTimeout(function() {
+                //     var items = $.cookie('items');
+                //     var i;
+                //     // Vincula as iterations aos items
+                //     for (i in items) {
+                //         if (items.hasOwnProperty(i)) {
+                //             var iterationId = items[i].iterationId;
+                //             items[i].iteration = findByIdInCookies(iterationId, 'iterations');
+                //         }
+                //     }
+
+                //     var filtered = [];
+                //     if (iterationId) {
+                //         for (i in items) {
+                //             if (items[i].iterationId === iterationId) {
+                //                 filtered.push(items[i]);
+                //             }
+                //         }
+                //         callback(filtered);
+                //     } else {
+                //         callback(items);
+                //     }
+                // }, 500);
             },
             read: function(id, callback) {
                 setTimeout(function() {
@@ -122,56 +150,63 @@ app.service('nrcm', ['$http',
                 }, 500);
             },
             save: function(data, callback) {
-                // $http.post('http://192.168.2.204:3333/apmt/items', data).success(function(response) {
-                    // callback(response);
-                // }).error(function() {
-                    // callback(false);
-                // });
 
-                setTimeout(function() {
+                $http.post('http://127.0.0.1:3333/apmt/items', data).success(function(response) {
+                    callback(response);
+                }).error(function() {
+                    callback(false);
+                });
 
-                    var items = $.cookie('items');
-                    if (!items) {
-                        items = [];
-                    }
-                    if (data.id !== undefined) {
-                        for (var i in items) {
-                            if (items.hasOwnProperty(i)) {
-                                var item = items[i];
-                                if (item.id === data.id) {
-                                    items[i] = data;
-                                    $.cookie('items', items);
-                                    callback(data);
-                                    return;
-                                }
-                            }
-                        }
-                        callback(false);
-                    } else {
-                        data.id = that.uuid();
-                        items.push(data);
-                        $.cookie('items', items);
-                        callback(data);
-                    }
-                }, 500);
+                // setTimeout(function() {
+
+                //     var items = $.cookie('items');
+                //     if (!items) {
+                //         items = [];
+                //     }
+                //     if (data.id !== undefined) {
+                //         for (var i in items) {
+                //             if (items.hasOwnProperty(i)) {
+                //                 var item = items[i];
+                //                 if (item.id === data.id) {
+                //                     items[i] = data;
+                //                     $.cookie('items', items);
+                //                     callback(data);
+                //                     return;
+                //                 }
+                //             }
+                //         }
+                //         callback(false);
+                //     } else {
+                //         data.id = that.uuid();
+                //         items.push(data);
+                //         $.cookie('items', items);
+                //         callback(data);
+                //     }
+                // }, 500);
 
             },
             remove: function(id, callback) {
-                setTimeout(function() {
-                    var items = $.cookie('items');
-                    for (var i in items) {
-                        if (items.hasOwnProperty(i)) {
-                            var item = items[i];
-                            if (item.id === id) {
-                                items.splice(i, 1);
-                                $.cookie('items', items);
-                                callback(true);
-                                return;
-                            }
-                        }
-                    }
+                $http.delete('http://127.0.0.1:3333/apmt/items?id=' + id).success(function(response) {
+                    callback(response);
+                }).error(function() {
                     callback(false);
-                }, 500);
+                });
+
+                // setTimeout(function() {
+                //     var items = $.cookie('items');
+                //     for (var i in items) {
+                //         if (items.hasOwnProperty(i)) {
+                //             var item = items[i];
+                //             if (item.id === id) {
+                //                 items.splice(i, 1);
+                //                 $.cookie('items', items);
+                //                 callback(true);
+                //                 return;
+                //             }
+                //         }
+                //     }
+                //     callback(false);
+                // }, 500);
             }
         };
 

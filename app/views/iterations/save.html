@@ -1,6 +1,6 @@
 <h1>{{mode}} Iteration</h1>
 <p ng-show="loading">Loading...</p>
-<form role="form" ng-show="!loading">
+<form role="form" ng-show="!loading" name="formSaveIteration">
     <input type="hidden" ng-model="iteration.id"/>
     
     <div class="form-group">
@@ -52,3 +52,5 @@
     <button ng-class="{'disabled' : saving}" ng-click="save(iteration)" class="btn btn-default btn-success btn-lg">Save Iteration</button>
 </form>
 
+    User Model: <pre ng-bind="toJ(iteration)"></pre>
+    Form: <pre ng-bind="toJ(formSaveIteration)"></pre>

@@ -20,11 +20,15 @@ app.controller('ItemsCtrl', ['$scope', '$route', '$routeParams', 'nrcm', 'messag
         };
 
         nrcm.items.list(iterationId, function(items) {
-            $scope.items = items;
+            $scope.items = [];
+            var record;
+            for (record in items) {
+                items[record].value.id = record;
+                $scope.items.push(items[record].value);
+            }
             // if iteration is passed, load it
             if (iterationId) {
                 nrcm.iterations.read(iterationId, function(iteration) {
-                    console.log(iteration);
                     $scope.iteration = iteration;
                     loadCompleted();
                 });
