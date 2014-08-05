@@ -70,7 +70,7 @@ describe('ItemsSaveCtrl', function () {
             var data = { };
             nrcm.items.save = function(item, callback) {
                 assert.equal(item, data);
-                callback({'id' : 1});
+                callback();
             };  
             inject(injectController);
             scope.save(data);

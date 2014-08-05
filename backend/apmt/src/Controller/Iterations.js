@@ -9,52 +9,70 @@ Iterations.prototype.before = function(callback) {
 }
 
 Iterations.prototype.options = function (callback) {
-    this.statusCode = 200;
     callback({});
 };
 
 Iterations.prototype.get = function (callback) {
     var that = this;
-    var item = this.model('Item');
-    item.find(this.query, function (err, result) {        
+    var iteration = this.model('Iteration');
+    iteration.query(this.query, function (err, result) {
         if (err) {
             that.statusCode = 404;
             callback({});
         } else {
             if (result !== undefined) {
-                callback(result);    
+                callback(result);
             } else {
                 that.statusCode = 404;
-                callback({});                
-            }            
+                callback({});
+            }
         }
     });
+};
+
+Iterations.prototype._save = function (callback) {
+    var that = this;
+    var iteration = this.model('Iteration');
+    iteration.store(this.query.id, this.payload, function (err, result) {
+        if (err) {
+            that.statusCode = 404;
+            callback({
+                'error' : err.name,
+                'message' :  err.message
+            });
+        } else {
+            callback(result);
+        }
+    });
+};
+
+Iterations.prototype.delete = function (callback) {
+    var that = this;
+    var iteration = this.model('Iteration');
+    if (this.query.id === undefined) {
+        that.statusCode = 404;
+        callback({});
+    } else {
+        iteration.delete(this.query.id, function (err, result) {
+            if (err) {
+                that.statusCode = 404;
+                callback({
+                    'error' : err.name,
+                    'message' :  err.message
+                });
+            } else {
+                callback(result);
+            }
+        });
+    }
 };
 
 Iterations.prototype.put = function (callback) {
-    var that = this;
-    var item = this.model('Item');
-    item.save(this.query.id, this.payload, function (err, result) {
-        if (err) {
-            that.statusCode = 404;
-            callback(err);
-        } else {
-            callback(result);
-        }
-    });
+    this._save(callback);
 };
 
 Iterations.prototype.post = function (callback) {
-    var that = this;
-    var item = this.model('Item');
-    item.save(this.query.id, this.payload, function (err, result) {
-        if (err) {
-            that.statusCode = 404;
-            callback(err);
-        } else {
-            callback(result);
-        }
-    });
+    this._save(callback);
 };
 
 module.exports = Iterations;

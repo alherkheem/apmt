@@ -1,11 +1,7 @@
 {
     "url": [{
-        "controller" : "items",
-        "group" : "*",
-        "rule" : [1, 1, 1, 1, 1, 1]
-    },{
         "controller" : "*",
         "group" : "*",
-        "rule" : [0, 0, 0, 0, 0, 0]
+        "rule" : [1, 1, 1, 1, 1, 1, 1]
     }]
 }

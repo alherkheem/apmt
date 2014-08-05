@@ -24,7 +24,6 @@ app.controller('ItemsCtrl', ['$scope', '$route', '$routeParams', 'nrcm', 'messag
             // if iteration is passed, load it
             if (iterationId) {
                 nrcm.iterations.read(iterationId, function(iteration) {
-                    console.log(iteration);
                     $scope.iteration = iteration;
                     loadCompleted();
                 });
@@ -70,6 +69,7 @@ app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'nrcm', 
         nrcm.iterations.list(function(iterations) {
             $scope.iterations = {};
             var iteration, i;
+
             for (i in iterations) {
                 iteration = iterations[i];
                 $scope.iterations[iteration.id] = iteration.name;
