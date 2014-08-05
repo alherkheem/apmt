@@ -10,6 +10,7 @@
 var app = angular.module('apmtApp');
 app.service('nrcm', ['$http',
     function nrcm($http) {
+        var BASE_URL = 'http://192.168.2.205:3333/apmt';
 
         function findByIdInCookies(id, type) {
             var objects = $.cookie(type);
@@ -92,17 +93,20 @@ app.service('nrcm', ['$http',
 
         this.items = {
             list: function(iterationId, callback) {
+                // $http.post(BASE_URL + '/items', data).success(function(response) {
+                //     callback(response);
+                // }).error(function() {
+                //     callback(false);
+                // });
                 setTimeout(function() {
                     var items = $.cookie('items');
                     var i;
                     // Vincula as iterations aos items
                     for (i in items) {
                         if (items.hasOwnProperty(i)) {
-                            var iterationId = items[i].iterationId;
-                            items[i].iteration = findByIdInCookies(iterationId, 'iterations');
+                            items[i].iteration = findByIdInCookies(items[i].iterationId, 'iterations');
                         }
                     }
-
                     var filtered = [];
                     if (iterationId) {
                         for (i in items) {
@@ -114,6 +118,7 @@ app.service('nrcm', ['$http',
                     } else {
                         callback(items);
                     }
+
                 }, 500);
             },
             read: function(id, callback) {
@@ -122,10 +127,10 @@ app.service('nrcm', ['$http',
                 }, 500);
             },
             save: function(data, callback) {
-                // $http.post('http://192.168.2.204:3333/apmt/items', data).success(function(response) {
-                    // callback(response);
-                // }).error(function() {
-                    // callback(false);
+                // $http.post(BASE_URL +'/items', data).success(function(response) {
+                //     callback(null, response);
+                // }).error(function(response) {
+                //     callback(response, null);
                 // });
 
                 setTimeout(function() {
@@ -141,7 +146,7 @@ app.service('nrcm', ['$http',
                                 if (item.id === data.id) {
                                     items[i] = data;
                                     $.cookie('items', items);
-                                    callback(data);
+                                    callback();
                                     return;
                                 }
                             }
@@ -151,7 +156,7 @@ app.service('nrcm', ['$http',
                         data.id = that.uuid();
                         items.push(data);
                         $.cookie('items', items);
-                        callback(data);
+                        callback();
                     }
                 }, 500);
 

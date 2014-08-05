@@ -2,7 +2,7 @@
 
 var app = angular.module('apmtApp');
 app.service('messages', ['$rootScope',
-    function messages($rootScope) {
+    function ($rootScope) {
 
         this.success = function(message) {
             $rootScope.$emit('apmt-message', {

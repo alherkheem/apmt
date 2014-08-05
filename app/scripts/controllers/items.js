@@ -95,8 +95,8 @@ app.controller('ItemsSaveCtrl', ['$scope', '$location', '$routeParams', 'nrcm', 
         $scope.save = function(item) {
             if (item) {
                 $scope.saving = true;
-                nrcm.items.save(item, function(data) {
-                    if (!data) {
+                nrcm.items.save(item, function(error) {
+                    if (error) {
                         messages.error('Error while trying to save item.');
                     } else {
                         messages.success('Item saved successfully!');

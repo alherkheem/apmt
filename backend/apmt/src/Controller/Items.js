@@ -16,6 +16,7 @@ Items.prototype.options = function (callback) {
 Items.prototype.get = function (callback) {
     var that = this;
     var item = this.model('Item');
+    console.log(this.query);
     item.find(this.query, function (err, result) {
         if (err) {
             that.statusCode = 404;

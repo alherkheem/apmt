@@ -1,8 +1,8 @@
 'use strict';
 
 var app = angular.module('apmtApp');
-app.directive('apmtMessages', ['$rootScope', 'messages',
-    function($rootScope, messages) {
+app.directive('apmtMessages', ['$rootScope',
+    function($rootScope) {
         return {
             templateUrl: 'views/directives/apmt-messages.html',
             restrict: 'E',
